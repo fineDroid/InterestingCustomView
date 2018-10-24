@@ -13,6 +13,12 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 图表
+ * create by zcjcumt
+ * 770233070@qq.com
+ */
+
 public class LineView extends View {
 	private int mViewWidth;
 	private int mViewHeight;
@@ -105,6 +111,7 @@ public class LineView extends View {
 					path.moveTo(startP.x, startP.y);
 				}
 
+				//贝塞尔曲线
 				path.cubicTo(p3.x, p3.y, p4.x, p4.y, endP.x, endP.y);
 			}
 
