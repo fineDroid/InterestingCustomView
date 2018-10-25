@@ -1,4 +1,4 @@
-package com.zcjcumt.indefineview.view;
+package com.zcjcumt.myview;
 
 import android.content.Context;
 import android.graphics.Canvas;
