@@ -1,8 +1,8 @@
 package com.zcjcumt.indefineview;
 
-import com.zcjcumt.myview.bean.BaseBean;
+import com.zcjcumt.myview.bean.BaseChartLineBean;
 
-public class MyBean<T, K> extends BaseBean {
+public class MyChartLineBean extends BaseChartLineBean {
 	private String des;
 	private String esc;
 

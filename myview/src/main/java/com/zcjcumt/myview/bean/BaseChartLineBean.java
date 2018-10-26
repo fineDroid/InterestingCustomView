@@ -1,9 +1,8 @@
 package com.zcjcumt.myview.bean;
 
-public abstract class BaseBean {
+public abstract class BaseChartLineBean {
 	private int rowData;
 	private int columnData;
-
 
 	public int getRowData() {
 		return rowData;

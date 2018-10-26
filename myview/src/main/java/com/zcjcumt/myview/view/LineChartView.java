@@ -9,11 +9,10 @@ import android.graphics.Point;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.support.annotation.Px;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.zcjcumt.myview.bean.BaseBean;
+import com.zcjcumt.myview.bean.BaseChartLineBean;
 import com.zcjcumt.myview.util.CustomUtil;
 
 import java.lang.annotation.Retention;
@@ -46,8 +45,8 @@ public class LineChartView extends View {
 	private float mChartStartBottom = CustomUtil.dip2px(getContext(), 20);
 
 	//坐标线宽度
-	private float mCoordinateLineStrokeWidth = CustomUtil.dip2px(getContext(), 4);
-	private float mLineChartStrokeWidth = CustomUtil.dip2px(getContext(), 4);
+	private float mCoordinateLineStrokeWidth = CustomUtil.dip2px(getContext(), 2);
+	private float mLineChartStrokeWidth = CustomUtil.dip2px(getContext(), 2);
 
 	//line色值
 	private int mCoordinateLineColor = Color.RED;
@@ -69,7 +68,7 @@ public class LineChartView extends View {
 	@ChartTypeDef.Type
 	private int mCharType = ChartTypeDef.CURVE;
 
-	private List<BaseBean> mDatas = new ArrayList<>();
+	private List<BaseChartLineBean> mDatas = new ArrayList<>();
 
 	public LineChartView(Context context) {
 		this(context, null);
@@ -96,17 +95,17 @@ public class LineChartView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		//paint
 		setPaint();
-		//竖线
+		//columnLine
 		canvas.drawLine(mChartStartLeft, mChartStartTop, mChartStartLeft, mViewHeight - mChartStartBottom, mCoordinateLinePaint);
-		//横线
+		//rowLine
 		canvas.drawLine(mChartStartLeft, mViewHeight - mChartStartBottom - mCoordinateLineStrokeWidth / 2,
 				mViewWidth - mChartStartRight, mViewHeight - mChartStartBottom - mCoordinateLineStrokeWidth / 2, mCoordinateLinePaint);
 
 		if (!mDatas.isEmpty()) {
-			drawLine(canvas);
+			drawChartLine(canvas);
 		}
-
 	}
 
 	private void setPaint() {
@@ -152,8 +151,8 @@ public class LineChartView extends View {
 	private int calculateRowMax() {
 		int max = 0;
 		if (mDatas != null && !mDatas.isEmpty()) {
-			for (BaseBean baseBean : mDatas) {
-				max = baseBean.getRowData() > max ? baseBean.getRowData() : max;
+			for (BaseChartLineBean baseChartLineBean : mDatas) {
+				max = baseChartLineBean.getRowData() > max ? baseChartLineBean.getRowData() : max;
 			}
 		}
 		return max;
@@ -162,14 +161,14 @@ public class LineChartView extends View {
 	private int calculateColumnMax() {
 		int max = 0;
 		if (mDatas != null && !mDatas.isEmpty()) {
-			for (BaseBean baseBean : mDatas) {
-				max = baseBean.getColumnData() > max ? baseBean.getColumnData() : max;
+			for (BaseChartLineBean baseChartLineBean : mDatas) {
+				max = baseChartLineBean.getColumnData() > max ? baseChartLineBean.getColumnData() : max;
 			}
 		}
 		return max;
 	}
 
-	private void drawLine(Canvas canvas) {
+	private void drawChartLine(Canvas canvas) {
 		final int columnMax = calculateColumnMax();
 		final int rowMax = calculateRowMax();
 
@@ -181,13 +180,18 @@ public class LineChartView extends View {
 		float avW = mLineChartWidth / mRowLineNumbers;
 
 		for (int i = 0; i < mColumnLineNumbers; i++) {
-			//竖线
+			//column coordinate text
 			canvas.drawText(String.valueOf(columnMax - i * (columnMax / mColumnLineNumbers)), mColumnLineTextStart, avH * i + mChartStartTop + mColumnLineTextSize, mColumnLineTextPaint);
+			//every row line
+//			canvas.drawLine(mChartStartLeft, avH * i + mChartStartTop, mLineChartWidth + mChartStartLeft, avH * i + mChartStartTop, mCoordinateLinePaint);
 		}
 
+
 		for (int i = 0; i <= mRowLineNumbers; i++) {
-			//横线
+			//row coordinate text
 			canvas.drawText(String.valueOf(i * (rowMax / mRowLineNumbers)), avW * i + mChartStartLeft, mViewHeight - mRowLineTextStart, mRowLineTextPaint);
+			//every column line
+//			canvas.drawLine(avW * i + mChartStartLeft, mChartStartTop, avW * i + mChartStartLeft, mLineChartHeight + mChartStartTop, mCoordinateLinePaint);
 		}
 
 		drawChart(canvas, columnMax, rowMax);
@@ -199,7 +203,6 @@ public class LineChartView extends View {
 		if (pointList == null || pointList.isEmpty()) {
 			return;
 		}
-
 		for (int j = 0; j < pointList.size(); j++) {
 			Point startP = pointList.get(j);
 			if (mCharType == ChartTypeDef.CURVE) {
@@ -210,17 +213,13 @@ public class LineChartView extends View {
 
 					Point p3 = new Point();
 					Point p4 = new Point();
-
 					p3.x = wt;
 					p3.y = startP.y;
-
 					p4.x = wt;
 					p4.y = endP.y;
-
 					if (j == 0) {
 						path.moveTo(startP.x, startP.y);
 					}
-
 					//贝塞尔曲线
 					path.cubicTo(p3.x, p3.y, p4.x, p4.y, endP.x, endP.y);
 				}
@@ -228,23 +227,22 @@ public class LineChartView extends View {
 				if (j == 0) {
 					path.moveTo(startP.x, startP.y);
 				} else {
+					//折线
 					path.lineTo(startP.x, startP.y);
 				}
-				canvas.drawText(String.valueOf(j), startP.x, startP.y, mColumnLineTextPaint);
 			}
 		}
-
 		canvas.drawPath(path, mChartLinePaint);
 	}
 
 	private List<Point> calculatePoints(final int columnMax, final int rowMax) {
 		List<Point> pointList = new ArrayList<>();
 		if (mDatas != null && !mDatas.isEmpty()) {
-			for (BaseBean baseBean : mDatas) {
-				int x = (int) mChartStartLeft + baseBean.getRowData() * ((int) mLineChartWidth / rowMax);
-				int y = (int) mChartStartTop + (int) mLineChartHeight - baseBean.getColumnData() * ((int) mLineChartHeight / columnMax);
+			for (BaseChartLineBean baseChartLineBean : mDatas) {
+				float x = mChartStartLeft + baseChartLineBean.getRowData() * (mLineChartWidth / rowMax);
+				float y = mChartStartTop + mLineChartHeight - baseChartLineBean.getColumnData() * (mLineChartHeight / columnMax);
 				Point point = new Point();
-				point.set(x, y);
+				point.set((int) x, (int) y);
 				pointList.add(point);
 			}
 		}
@@ -259,7 +257,7 @@ public class LineChartView extends View {
 			this.lineChartView = lineChartView;
 		}
 
-		public Builder setDatas(List<? extends BaseBean> datas) {
+		public Builder setDatas(List<? extends BaseChartLineBean> datas) {
 			if (!lineChartView.mDatas.isEmpty()) {
 				lineChartView.mDatas.clear();
 			}
