@@ -1,4 +1,4 @@
-package com.zcjcumt.myview;
+package com.zcjcumt.myview.view;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
+import com.zcjcumt.myview.R;
 
 import java.util.List;
 

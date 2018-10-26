@@ -1,0 +1,338 @@
+package com.zcjcumt.myview.view;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
+import android.support.annotation.ColorInt;
+import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
+import android.support.annotation.Px;
+import android.util.AttributeSet;
+import android.view.View;
+
+import com.zcjcumt.myview.bean.BaseBean;
+import com.zcjcumt.myview.util.CustomUtil;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 折线图
+ * create by zcjcumt
+ * 770233070@qq.com
+ */
+
+public class LineChartView extends View {
+
+	private int mViewWidth;
+	private int mViewHeight;
+	private float mLineChartWidth;
+	private float mLineChartHeight;
+
+	private Paint mCoordinateLinePaint;
+	private Paint mChartLinePaint;
+	private Paint mColumnLineTextPaint;
+	private Paint mRowLineTextPaint;
+
+	//坐标轴绘制起止间距
+	private float mChartStartLeft = CustomUtil.dip2px(getContext(), 20);
+	private float mChartStartTop = CustomUtil.dip2px(getContext(), 20);
+	private float mChartStartRight = CustomUtil.dip2px(getContext(), 20);
+	private float mChartStartBottom = CustomUtil.dip2px(getContext(), 20);
+
+	//坐标线宽度
+	private float mCoordinateLineStrokeWidth = CustomUtil.dip2px(getContext(), 4);
+	private float mLineChartStrokeWidth = CustomUtil.dip2px(getContext(), 4);
+
+	//line色值
+	private int mCoordinateLineColor = Color.RED;
+	private int mChartLineColor = Color.BLACK;
+
+	//坐标轴文字大小
+	private float mRowLineTextSize = CustomUtil.dip2px(getContext(), 10);
+	private float mColumnLineTextSize = CustomUtil.dip2px(getContext(), 10);
+
+	//坐标轴文字起始距离
+	private float mRowLineTextStart = CustomUtil.dip2px(getContext(), 6);
+	private float mColumnLineTextStart = CustomUtil.dip2px(getContext(), 6);
+
+	//横列坐标轴行数
+	private int mRowLineNumbers = 10;
+	private int mColumnLineNumbers = 5;
+
+	//曲线类型
+	@ChartTypeDef.Type
+	private int mCharType = ChartTypeDef.CURVE;
+
+	private List<BaseBean> mDatas = new ArrayList<>();
+
+	public LineChartView(Context context) {
+		this(context, null);
+	}
+
+	public LineChartView(Context context, @Nullable AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
+
+	public LineChartView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+	}
+
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		mViewHeight = getMeasuredHeight();
+		mViewWidth = getMeasuredWidth();
+		mLineChartHeight = mViewHeight - mChartStartBottom - mChartStartTop;
+		mLineChartWidth = mViewWidth - mChartStartRight - mChartStartLeft;
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		setPaint();
+		//竖线
+		canvas.drawLine(mChartStartLeft, mChartStartTop, mChartStartLeft, mViewHeight - mChartStartBottom, mCoordinateLinePaint);
+		//横线
+		canvas.drawLine(mChartStartLeft, mViewHeight - mChartStartBottom - mCoordinateLineStrokeWidth / 2,
+				mViewWidth - mChartStartRight, mViewHeight - mChartStartBottom - mCoordinateLineStrokeWidth / 2, mCoordinateLinePaint);
+
+		if (!mDatas.isEmpty()) {
+			drawLine(canvas);
+		}
+
+	}
+
+	private void setPaint() {
+		if (mCoordinateLinePaint == null) {
+			mCoordinateLinePaint = new Paint();
+		}
+		initPaint(mCoordinateLinePaint);
+
+		mCoordinateLinePaint.setColor(mCoordinateLineColor);
+		mCoordinateLinePaint.setStrokeWidth(mCoordinateLineStrokeWidth);
+
+		if (mChartLinePaint == null) {
+			mChartLinePaint = new Paint();
+		}
+		initPaint(mChartLinePaint);
+
+		mChartLinePaint.setColor(mChartLineColor);
+		mChartLinePaint.setStrokeWidth(mLineChartStrokeWidth);
+
+		if (mColumnLineTextPaint == null) {
+			mColumnLineTextPaint = new Paint();
+		}
+		initPaint(mColumnLineTextPaint);
+		mColumnLineTextPaint.setColor(mCoordinateLineColor);
+		mColumnLineTextPaint.setTextSize(mColumnLineTextSize);
+		mColumnLineTextPaint.setTextAlign(Paint.Align.LEFT);
+
+		if (mRowLineTextPaint == null) {
+			mRowLineTextPaint = new Paint();
+		}
+		initPaint(mRowLineTextPaint);
+		mRowLineTextPaint.setColor(mCoordinateLineColor);
+		mRowLineTextPaint.setTextSize(mRowLineTextSize);
+		mRowLineTextPaint.setTextAlign(Paint.Align.CENTER);
+	}
+
+
+	private void initPaint(Paint paint) {
+		paint.setAntiAlias(true);
+		paint.setStyle(Paint.Style.STROKE);
+	}
+
+	private int calculateRowMax() {
+		int max = 0;
+		if (mDatas != null && !mDatas.isEmpty()) {
+			for (BaseBean baseBean : mDatas) {
+				max = baseBean.getRowData() > max ? baseBean.getRowData() : max;
+			}
+		}
+		return max;
+	}
+
+	private int calculateColumnMax() {
+		int max = 0;
+		if (mDatas != null && !mDatas.isEmpty()) {
+			for (BaseBean baseBean : mDatas) {
+				max = baseBean.getColumnData() > max ? baseBean.getColumnData() : max;
+			}
+		}
+		return max;
+	}
+
+	private void drawLine(Canvas canvas) {
+		final int columnMax = calculateColumnMax();
+		final int rowMax = calculateRowMax();
+
+		if (columnMax == 0 || rowMax == 0) {
+			return;
+		}
+
+		float avH = mLineChartHeight / mColumnLineNumbers;
+		float avW = mLineChartWidth / mRowLineNumbers;
+
+		for (int i = 0; i < mColumnLineNumbers; i++) {
+			//竖线
+			canvas.drawText(String.valueOf(columnMax - i * (columnMax / mColumnLineNumbers)), mColumnLineTextStart, avH * i + mChartStartTop + mColumnLineTextSize, mColumnLineTextPaint);
+		}
+
+		for (int i = 0; i <= mRowLineNumbers; i++) {
+			//横线
+			canvas.drawText(String.valueOf(i * (rowMax / mRowLineNumbers)), avW * i + mChartStartLeft, mViewHeight - mRowLineTextStart, mRowLineTextPaint);
+		}
+
+		drawChart(canvas, columnMax, rowMax);
+	}
+
+	private void drawChart(Canvas canvas, final int columnMax, final int rowMax) {
+		Path path = new Path();
+		List<Point> pointList = calculatePoints(columnMax, rowMax);
+		if (pointList == null || pointList.isEmpty()) {
+			return;
+		}
+
+		for (int j = 0; j < pointList.size(); j++) {
+			Point startP = pointList.get(j);
+			if (mCharType == ChartTypeDef.CURVE) {
+				Point endP;
+				if (j != pointList.size() - 1) {
+					endP = pointList.get(j + 1);
+					int wt = (startP.x + endP.x) / 2;
+
+					Point p3 = new Point();
+					Point p4 = new Point();
+
+					p3.x = wt;
+					p3.y = startP.y;
+
+					p4.x = wt;
+					p4.y = endP.y;
+
+					if (j == 0) {
+						path.moveTo(startP.x, startP.y);
+					}
+
+					//贝塞尔曲线
+					path.cubicTo(p3.x, p3.y, p4.x, p4.y, endP.x, endP.y);
+				}
+			} else if (mCharType == ChartTypeDef.LINE) {
+				if (j == 0) {
+					path.moveTo(startP.x, startP.y);
+				} else {
+					path.lineTo(startP.x, startP.y);
+				}
+				canvas.drawText(String.valueOf(j), startP.x, startP.y, mColumnLineTextPaint);
+			}
+		}
+
+		canvas.drawPath(path, mChartLinePaint);
+	}
+
+	private List<Point> calculatePoints(final int columnMax, final int rowMax) {
+		List<Point> pointList = new ArrayList<>();
+		if (mDatas != null && !mDatas.isEmpty()) {
+			for (BaseBean baseBean : mDatas) {
+				int x = (int) mChartStartLeft + baseBean.getRowData() * ((int) mLineChartWidth / rowMax);
+				int y = (int) mChartStartTop + (int) mLineChartHeight - baseBean.getColumnData() * ((int) mLineChartHeight / columnMax);
+				Point point = new Point();
+				point.set(x, y);
+				pointList.add(point);
+			}
+		}
+
+		return pointList;
+	}
+
+	public static class Builder {
+		private LineChartView lineChartView;
+
+		public Builder(LineChartView lineChartView) {
+			this.lineChartView = lineChartView;
+		}
+
+		public Builder setDatas(List<? extends BaseBean> datas) {
+			if (!lineChartView.mDatas.isEmpty()) {
+				lineChartView.mDatas.clear();
+			}
+			lineChartView.mDatas.addAll(datas);
+			return this;
+		}
+
+		public Builder setColumnLineNumbers(int numbers) {
+			if (numbers < 1) {
+				throw new IllegalArgumentException("column numbers need more 1");
+			}
+			lineChartView.mColumnLineNumbers = numbers;
+			return this;
+		}
+
+		public Builder setRowLineNumbers(int numbers) {
+			if (numbers < 1) {
+				throw new IllegalArgumentException("row numbers need more 1");
+			}
+			lineChartView.mRowLineNumbers = numbers;
+			return this;
+		}
+
+		public Builder setCoordinateLineColor(@ColorInt int color) {
+			lineChartView.mCoordinateLineColor = color;
+			return this;
+		}
+
+		public Builder setChartLineColor(@ColorInt int color) {
+			lineChartView.mChartLineColor = color;
+			return this;
+		}
+
+		public Builder setCoordinateLineStrokeWidth(float strokeWidthPx) {
+			lineChartView.mCoordinateLineStrokeWidth = strokeWidthPx;
+			return this;
+		}
+
+		public Builder setLineChartStrokeWidth(float strokeWidthPx) {
+			lineChartView.mLineChartStrokeWidth = strokeWidthPx;
+			return this;
+		}
+
+		public Builder setRowLineTextSize(float sizePx) {
+			lineChartView.mRowLineTextSize = sizePx;
+			return this;
+		}
+
+		public Builder setColumnLineTextSize(float sizePx) {
+			lineChartView.mColumnLineTextSize = sizePx;
+			return this;
+		}
+
+		public Builder setLineType(@ChartTypeDef.Type int type) {
+			lineChartView.mCharType = type;
+			return this;
+		}
+
+		public void build() {
+			lineChartView.invalidate();
+		}
+	}
+
+	public interface ChartTypeDef {
+		int CURVE = 1;
+		int LINE = 2;
+
+		@IntDef({CURVE, LINE})
+		@Retention(RetentionPolicy.SOURCE)
+		@interface Type {
+		}
+	}
+
+}
+
+
