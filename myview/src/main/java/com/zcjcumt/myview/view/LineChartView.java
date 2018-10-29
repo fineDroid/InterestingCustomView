@@ -28,41 +28,41 @@ import java.util.List;
 
 public class LineChartView extends View {
 
-	private int mViewWidth;
-	private int mViewHeight;
-	private float mLineChartWidth;
-	private float mLineChartHeight;
+	protected int mViewWidth;
+	protected int mViewHeight;
+	protected float mLineChartWidth;
+	protected float mLineChartHeight;
 
-	private Paint mCoordinateLinePaint;
-	private Paint mChartLinePaint;
-	private Paint mColumnLineTextPaint;
-	private Paint mRowLineTextPaint;
+	protected Paint mCoordinateLinePaint;
+	protected Paint mChartLinePaint;
+	protected Paint mColumnLineTextPaint;
+	protected Paint mRowLineTextPaint;
 
 	//坐标轴绘制起止间距
-	private float mChartStartLeft = CustomUtil.dip2px(getContext(), 20);
-	private float mChartStartTop = CustomUtil.dip2px(getContext(), 20);
-	private float mChartStartRight = CustomUtil.dip2px(getContext(), 20);
-	private float mChartStartBottom = CustomUtil.dip2px(getContext(), 20);
+	protected float mChartStartLeft = CustomUtil.dip2px(getContext(), 20);
+	protected float mChartStartTop = CustomUtil.dip2px(getContext(), 20);
+	protected float mChartStartRight = CustomUtil.dip2px(getContext(), 20);
+	protected float mChartStartBottom = CustomUtil.dip2px(getContext(), 20);
 
 	//坐标线宽度
-	private float mCoordinateLineStrokeWidth = CustomUtil.dip2px(getContext(), 2);
-	private float mLineChartStrokeWidth = CustomUtil.dip2px(getContext(), 2);
+	protected float mCoordinateLineStrokeWidth = CustomUtil.dip2px(getContext(), 2);
+	protected float mLineChartStrokeWidth = CustomUtil.dip2px(getContext(), 2);
 
 	//line色值
-	private int mCoordinateLineColor = Color.RED;
-	private int mChartLineColor = Color.BLACK;
+	protected int mCoordinateLineColor = Color.RED;
+	protected int mChartLineColor = Color.BLACK;
 
 	//坐标轴文字大小
-	private float mRowLineTextSize = CustomUtil.dip2px(getContext(), 10);
-	private float mColumnLineTextSize = CustomUtil.dip2px(getContext(), 10);
+	protected float mRowLineTextSize = CustomUtil.dip2px(getContext(), 10);
+	protected float mColumnLineTextSize = CustomUtil.dip2px(getContext(), 10);
 
 	//坐标轴文字起始距离
-	private float mRowLineTextStart = CustomUtil.dip2px(getContext(), 6);
-	private float mColumnLineTextStart = CustomUtil.dip2px(getContext(), 6);
+	protected float mRowLineTextStart = CustomUtil.dip2px(getContext(), 6);
+	protected float mColumnLineTextStart = CustomUtil.dip2px(getContext(), 6);
 
 	//横列坐标轴行数
-	private int mRowLineNumbers = 10;
-	private int mColumnLineNumbers = 5;
+	protected int mRowLineNumbers = 10;
+	protected int mColumnLineNumbers = 5;
 
 	//曲线类型
 	@ChartTypeDef.Type
@@ -97,18 +97,21 @@ public class LineChartView extends View {
 		super.onDraw(canvas);
 		//paint
 		setPaint();
-		//columnLine
-		canvas.drawLine(mChartStartLeft, mChartStartTop, mChartStartLeft, mViewHeight - mChartStartBottom, mCoordinateLinePaint);
-		//rowLine
-		canvas.drawLine(mChartStartLeft, mViewHeight - mChartStartBottom - mCoordinateLineStrokeWidth / 2,
-				mViewWidth - mChartStartRight, mViewHeight - mChartStartBottom - mCoordinateLineStrokeWidth / 2, mCoordinateLinePaint);
-
+		drawCoordinateLine(canvas);
 		if (!mDatas.isEmpty()) {
 			drawChartLine(canvas);
 		}
 	}
 
-	private void setPaint() {
+	protected void drawCoordinateLine(Canvas canvas) {
+		//columnLine
+		canvas.drawLine(mChartStartLeft, mChartStartTop, mChartStartLeft, mViewHeight - mChartStartBottom, mCoordinateLinePaint);
+		//rowLine
+		canvas.drawLine(mChartStartLeft, mViewHeight - mChartStartBottom - mCoordinateLineStrokeWidth / 2,
+				mViewWidth - mChartStartRight, mViewHeight - mChartStartBottom - mCoordinateLineStrokeWidth / 2, mCoordinateLinePaint);
+	}
+
+	protected void setPaint() {
 		if (mCoordinateLinePaint == null) {
 			mCoordinateLinePaint = new Paint();
 		}
@@ -168,7 +171,7 @@ public class LineChartView extends View {
 		return max;
 	}
 
-	private void drawChartLine(Canvas canvas) {
+	protected void drawChartLine(Canvas canvas) {
 		final int columnMax = calculateColumnMax();
 		final int rowMax = calculateRowMax();
 

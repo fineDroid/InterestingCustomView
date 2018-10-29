@@ -41,7 +41,7 @@ public class PieLayout extends LinearLayout {
 
 		mPieView = new PieView(context);
 		PieView.Builder builder = new PieView.Builder(mPieView);
-		builder.build();
+		builder.setDatas(datas).build();
 
 		LayoutParams params = new LayoutParams(0, (int) dpToPx(100));
 		params.weight = 1;

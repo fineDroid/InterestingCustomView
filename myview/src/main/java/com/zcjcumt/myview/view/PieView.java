@@ -22,13 +22,13 @@ import java.util.List;
  */
 
 public class PieView extends View {
-	private Paint mPaint;
-	private List<BasePieBean> mData = new ArrayList<>();
-	private PieChartAnimation mAnimation;
-	private long mAnimationDuration = 1000;
-	private final int sStartAngle = 270;
-	private float sumValue = 0;//数据值的总和
-	private int mWidth, mHeight;
+	protected Paint mPaint;
+	protected List<BasePieBean> mData = new ArrayList<>();
+	protected PieChartAnimation mAnimation;
+	protected long mAnimationDuration = 1000;
+	protected final int sStartAngle = 270;
+	protected float sumValue = 0;//数据值的总和
+	protected int mWidth, mHeight;
 
 	public PieView(Context context) {
 		this(context, null);
@@ -58,19 +58,14 @@ public class PieView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		customDraw(canvas);
+	}
+
+	protected void customDraw(Canvas canvas) {
 		int radius = Math.min(mWidth, mHeight) / 2;
 		RectF rectF = new RectF(0, 0, radius * 2, radius * 2);
 		if (mData.isEmpty()) {
-			mPaint.setStyle(Paint.Style.STROKE);
-			mPaint.setColor(Color.BLACK);
-
-			mPaint.setStyle(Paint.Style.FILL);
-			mPaint.setColor(Color.RED);
-			//矩形内绘制弧形
-			canvas.drawArc(rectF, 0, 360, false, mPaint);
-			//绘制饼图内圆
-			mPaint.setColor(Color.WHITE);
-			canvas.drawCircle(radius, radius, radius / 2, mPaint);
+			drawEmpty(canvas, radius, rectF);
 		} else {
 			float currentStartAngle = sStartAngle;
 			for (BasePieBean pieData : mData) {
@@ -84,10 +79,22 @@ public class PieView extends View {
 			mPaint.setColor(Color.WHITE);
 			canvas.drawCircle(radius, radius, radius / 2, mPaint);
 		}
-
 	}
 
-	private void init() {
+	private void drawEmpty(Canvas canvas, int radius, RectF rectF) {
+		mPaint.setStyle(Paint.Style.STROKE);
+		mPaint.setColor(Color.BLACK);
+
+		mPaint.setStyle(Paint.Style.FILL);
+		mPaint.setColor(Color.RED);
+		//矩形内绘制弧形
+		canvas.drawArc(rectF, 0, 360, false, mPaint);
+		//绘制饼图内圆
+		mPaint.setColor(Color.WHITE);
+		canvas.drawCircle(radius, radius, radius / 2, mPaint);
+	}
+
+	protected void init() {
 		if (mPaint == null) {
 			mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		}
