@@ -25,7 +25,7 @@ public class PieView extends View {
 	private Paint mPaint;
 	private List<BasePieBean> mData = new ArrayList<>();
 	private PieChartAnimation mAnimation;
-	private static final long ANIMATION_DURATION = 1000;
+	private long mAnimationDuration = 1000;
 	private final int sStartAngle = 270;
 	private float sumValue = 0;//数据值的总和
 	private int mWidth, mHeight;
@@ -102,10 +102,14 @@ public class PieView extends View {
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
 
+		setAnimationDuration();
+	}
+
+	private void setAnimationDuration() {
 		if (mAnimation == null) {
 			mAnimation = new PieChartAnimation();
 		}
-		mAnimation.setDuration(ANIMATION_DURATION);
+		mAnimation.setDuration(mAnimationDuration);
 	}
 
 	private void setDatas(List<? extends BasePieBean> data) {
@@ -187,6 +191,12 @@ public class PieView extends View {
 
 		public Builder setDatas(List<? extends BasePieBean> datas) {
 			pieView.setDatas(datas);
+			return this;
+		}
+
+		public Builder setAnimationDuration(long duration) {
+			pieView.mAnimationDuration = duration;
+			pieView.setAnimationDuration();
 			return this;
 		}
 
