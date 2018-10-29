@@ -1,20 +1,15 @@
 package com.zcjcumt.myview.bean;
 
 public abstract class BasePieBean {
-	/**
-	 * 用户传递的数据
-	 */
-	private float value; //值
-	private String name;
-	private String desc;
-	/**
-	 * 计算出来的数据
-	 */
+	private float value;
+	private int color;
+
 	private float percentage; //百分比
-	private int color = 0;//颜色值
 	private float angle = 0;//角度
 
-	public BasePieBean() {
+	public BasePieBean(float value, int color) {
+		this.value = value;
+		this.color = color;
 	}
 
 	public float getValue() {
@@ -25,21 +20,6 @@ public abstract class BasePieBean {
 		this.value = value;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
 
 	public float getPercentage() {
 		return percentage;

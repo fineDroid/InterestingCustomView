@@ -15,35 +15,22 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		MyChartLineBean myBean1 = new MyChartLineBean();
-		myBean1.setColumnData(10);
-		myBean1.setRowData(100);
+		MyChartLineBean myBean1 = new MyChartLineBean(100, 10);
 		myBean1.setDes("111");
 
-		MyChartLineBean myBean2 = new MyChartLineBean();
-		myBean2.setColumnData(20);
-		myBean2.setRowData(200);
+		MyChartLineBean myBean2 = new MyChartLineBean(200, 20);
 		myBean2.setDes("222");
 
-
-		MyChartLineBean myBean3 = new MyChartLineBean();
-		myBean3.setColumnData(10);
-		myBean3.setRowData(400);
+		MyChartLineBean myBean3 = new MyChartLineBean(400, 10);
 		myBean3.setDes("333");
 
-		MyChartLineBean myBean4 = new MyChartLineBean();
-		myBean4.setColumnData(30);
-		myBean4.setRowData(500);
+		MyChartLineBean myBean4 = new MyChartLineBean(500, 30);
 		myBean4.setDes("444");
 
-		MyChartLineBean myBean5 = new MyChartLineBean();
-		myBean5.setColumnData(20);
-		myBean5.setRowData(600);
+		MyChartLineBean myBean5 = new MyChartLineBean(600, 20);
 		myBean5.setDes("555");
 
-		MyChartLineBean myBean6 = new MyChartLineBean();
-		myBean6.setColumnData(30);
-		myBean6.setRowData(700);
+		MyChartLineBean myBean6 = new MyChartLineBean(700, 30);
 		myBean6.setDes("666");
 
 		List<MyChartLineBean> dataList = new ArrayList<>();

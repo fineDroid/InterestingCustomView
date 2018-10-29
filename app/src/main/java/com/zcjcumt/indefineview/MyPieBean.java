@@ -3,13 +3,26 @@ package com.zcjcumt.indefineview;
 import com.zcjcumt.myview.bean.BasePieBean;
 
 public class MyPieBean extends BasePieBean {
-	private String es;
+	private String name;
+	private String desc;
 
-	public String getEs() {
-		return es;
+	public MyPieBean(float value, int color) {
+		super(value, color);
 	}
 
-	public void setEs(String es) {
-		this.es = es;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 }

@@ -1,6 +1,12 @@
 package com.zcjcumt.myview.bean;
 
 public abstract class BaseChartLineBean {
+
+	public BaseChartLineBean(int rowData, int columnData) {
+		this.rowData = rowData;
+		this.columnData = columnData;
+	}
+
 	private int rowData;
 	private int columnData;
 

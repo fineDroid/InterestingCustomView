@@ -4,7 +4,10 @@ import com.zcjcumt.myview.bean.BaseChartLineBean;
 
 public class MyChartLineBean extends BaseChartLineBean {
 	private String des;
-	private String esc;
+
+	public MyChartLineBean(int rowData, int columnData) {
+		super(rowData, columnData);
+	}
 
 	public String getDes() {
 		return des;
@@ -14,11 +17,4 @@ public class MyChartLineBean extends BaseChartLineBean {
 		this.des = des;
 	}
 
-	public String getEsc() {
-		return esc;
-	}
-
-	public void setEsc(String esc) {
-		this.esc = esc;
-	}
 }

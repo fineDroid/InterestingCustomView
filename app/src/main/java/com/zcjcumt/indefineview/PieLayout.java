@@ -70,7 +70,7 @@ public class PieLayout extends LinearLayout {
 			name.setTextColor(pieData.getColor());
 			desc.setTextColor(pieData.getColor());
 			name.setText(pieData.getName());
-			desc.setText("￥" + pieData.getDesc());
+			desc.setText(pieData.getDesc());
 
 			LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 			layoutParams.bottomMargin = (int) dpToPx(6);
@@ -86,23 +86,17 @@ public class PieLayout extends LinearLayout {
 	private List<MyPieBean> initDatas() {
 
 		List<MyPieBean> datas = new ArrayList<>();
-		MyPieBean pieData1 = new MyPieBean();
+		MyPieBean pieData1 = new MyPieBean(500f, Color.parseColor("#FF9912"));
 		pieData1.setName("APPLE Company");
-		pieData1.setValue(500f);
-		pieData1.setDesc("500");
-		pieData1.setColor(Color.parseColor("#FF9912"));
+		pieData1.setDesc("$500");
 
-		MyPieBean pieData2 = new MyPieBean();
+		MyPieBean pieData2 = new MyPieBean(300f, Color.parseColor("#FF6100"));
 		pieData2.setName("Alibaba Company");
-		pieData2.setValue(300f);
-		pieData2.setDesc("300");
-		pieData2.setColor(Color.parseColor("#FF6100"));
+		pieData2.setDesc("$300");
 
-		MyPieBean pieData3 = new MyPieBean();
+		MyPieBean pieData3 = new MyPieBean(100f, Color.parseColor("#1E90FF"));
 		pieData3.setName("Tencent Company");
-		pieData3.setValue(100f);
-		pieData3.setDesc("100");
-		pieData3.setColor(Color.parseColor("#1E90FF"));
+		pieData3.setDesc("$100");
 
 		datas.add(pieData1);
 		datas.add(pieData2);
