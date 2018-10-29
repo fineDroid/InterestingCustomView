@@ -50,11 +50,6 @@ public class PieView extends View {
 	}
 
 	@Override
-	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-		super.onLayout(changed, left, top, right, bottom);
-	}
-
-	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		mWidth = w;
@@ -68,16 +63,13 @@ public class PieView extends View {
 		if (mData.isEmpty()) {
 			mPaint.setStyle(Paint.Style.STROKE);
 			mPaint.setColor(Color.BLACK);
-			//绘制矩形
-			canvas.drawRect(rectF, mPaint);
 
 			mPaint.setStyle(Paint.Style.FILL);
 			mPaint.setColor(Color.RED);
 			//矩形内绘制弧形
 			canvas.drawArc(rectF, 0, 360, false, mPaint);
-			mPaint.setColor(Color.GREEN);
-
-			//绘制圆
+			//绘制饼图内圆
+			mPaint.setColor(Color.WHITE);
 			canvas.drawCircle(radius, radius, radius / 2, mPaint);
 		} else {
 			float currentStartAngle = sStartAngle;
@@ -88,8 +80,8 @@ public class PieView extends View {
 				canvas.drawArc(rectF, currentStartAngle, pieData.getAngle(), true, mPaint);
 				currentStartAngle += pieData.getAngle();
 			}
+			//绘制饼图内圆
 			mPaint.setColor(Color.WHITE);
-			//绘制圆
 			canvas.drawCircle(radius, radius, radius / 2, mPaint);
 		}
 
@@ -128,16 +120,14 @@ public class PieView extends View {
 			return;
 		}
 		sumValue = 0;
-		/**
-		 * 计算数据总和确定颜色
-		 */
+
+		//计算数据总和确定颜色
 		for (int i = 0; i < mData.size(); i++) {
 			BasePieBean data = mData.get(i);
 			sumValue += data.getValue();
 		}
-		/**
-		 * 计算百分比和角度
-		 */
+
+		//计算百分比和角度
 		for (int i = 0; i < mData.size(); i++) {
 			BasePieBean data = mData.get(i);
 			//通过总和来计算百分比
@@ -195,6 +185,9 @@ public class PieView extends View {
 		}
 
 		public Builder setAnimationDuration(long duration) {
+			if (duration < 0) {
+				throw new IllegalArgumentException("Animation duration cannot be negative");
+			}
 			pieView.mAnimationDuration = duration;
 			pieView.setAnimationDuration();
 			return this;
