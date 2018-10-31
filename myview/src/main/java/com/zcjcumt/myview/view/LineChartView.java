@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.zcjcumt.myview.LineChartType;
 import com.zcjcumt.myview.bean.BaseChartLineBean;
 import com.zcjcumt.myview.util.CustomUtil;
 
@@ -22,7 +23,7 @@ import java.util.List;
 
 /**
  * 折线图
- * create by zcjcumt
+ * create by zcj
  * 770233070@qq.com
  */
 
@@ -65,8 +66,8 @@ public class LineChartView extends View {
 	protected int mColumnLineNumbers = 5;
 
 	//曲线类型
-	@ChartTypeDef.Type
-	private int mCharType = ChartTypeDef.CURVE;
+	@LineChartType
+	private int mCharType = LineChartType.CURVE;
 
 	private List<BaseChartLineBean> mDatas = new ArrayList<>();
 
@@ -208,7 +209,7 @@ public class LineChartView extends View {
 		}
 		for (int j = 0; j < pointList.size(); j++) {
 			Point startP = pointList.get(j);
-			if (mCharType == ChartTypeDef.CURVE) {
+			if (mCharType == LineChartType.CURVE) {
 				Point endP;
 				if (j != pointList.size() - 1) {
 					endP = pointList.get(j + 1);
@@ -226,7 +227,7 @@ public class LineChartView extends View {
 					//贝塞尔曲线
 					path.cubicTo(p3.x, p3.y, p4.x, p4.y, endP.x, endP.y);
 				}
-			} else if (mCharType == ChartTypeDef.LINE) {
+			} else if (mCharType == LineChartType.LINE) {
 				if (j == 0) {
 					path.moveTo(startP.x, startP.y);
 				} else {
@@ -314,23 +315,13 @@ public class LineChartView extends View {
 			return this;
 		}
 
-		public Builder setLineType(@ChartTypeDef.Type int type) {
+		public Builder setLineType(@LineChartType int type) {
 			lineChartView.mCharType = type;
 			return this;
 		}
 
 		public void build() {
 			lineChartView.invalidate();
-		}
-	}
-
-	public interface ChartTypeDef {
-		int CURVE = 1;
-		int LINE = 2;
-
-		@IntDef({CURVE, LINE})
-		@Retention(RetentionPolicy.SOURCE)
-		@interface Type {
 		}
 	}
 

@@ -18,7 +18,8 @@ import java.util.List;
 
 /**
  * 饼图
- * Create by zcjcumt 2018.10.12
+ * Create by zcj 2018.10.12
+ * 770233070@qq.com
  */
 
 public class PieView extends View {
