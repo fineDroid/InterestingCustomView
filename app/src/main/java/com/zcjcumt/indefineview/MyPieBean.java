@@ -1,6 +1,6 @@
 package com.zcjcumt.indefineview;
 
-import com.zcjcumt.myview.bean.BasePieBean;
+import com.findroid.interestingview.bean.BasePieBean;
 
 public class MyPieBean extends BasePieBean {
 	private String name;

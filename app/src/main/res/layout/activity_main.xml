@@ -11,7 +11,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center" />
 
-    <com.zcjcumt.myview.view.LineChartView
+    <com.findroid.interestingview.view.LineChartView
         android:id="@+id/myLineChart"
         android:layout_width="300dp"
         android:layout_height="match_parent"

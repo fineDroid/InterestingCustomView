@@ -3,7 +3,7 @@ package com.zcjcumt.indefineview;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.zcjcumt.myview.view.LineChartView;
+import com.findroid.interestingview.view.LineChartView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.zcjcumt.myview.util;
+package com.findroid.interestingview.util;
 
 import android.content.Context;
 

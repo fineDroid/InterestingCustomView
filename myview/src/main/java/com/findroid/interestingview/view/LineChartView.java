@@ -1,4 +1,4 @@
-package com.zcjcumt.myview.view;
+package com.findroid.interestingview.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,17 +7,14 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.support.annotation.ColorInt;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.zcjcumt.myview.LineChartType;
-import com.zcjcumt.myview.bean.BaseChartLineBean;
-import com.zcjcumt.myview.util.CustomUtil;
+import com.findroid.interestingview.util.CustomUtil;
+import com.findroid.interestingview.LineChartType;
+import com.findroid.interestingview.bean.BaseChartLineBean;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 

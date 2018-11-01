@@ -14,8 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.zcjcumt.myview.R;
-import com.zcjcumt.myview.view.PieView;
+import com.findroid.interestingview.view.PieView;
 
 import java.util.ArrayList;
 import java.util.List;

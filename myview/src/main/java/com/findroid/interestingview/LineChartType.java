@@ -1,4 +1,4 @@
-package com.zcjcumt.myview;
+package com.findroid.interestingview;
 
 import android.support.annotation.IntDef;
 

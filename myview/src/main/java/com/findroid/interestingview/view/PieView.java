@@ -1,4 +1,4 @@
-package com.zcjcumt.myview.view;
+package com.findroid.interestingview.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
-import com.zcjcumt.myview.bean.BasePieBean;
+import com.findroid.interestingview.bean.BasePieBean;
 
 import java.util.ArrayList;
 import java.util.List;

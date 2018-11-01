@@ -1,6 +1,6 @@
 package com.zcjcumt.indefineview;
 
-import com.zcjcumt.myview.bean.BaseChartLineBean;
+import com.findroid.interestingview.bean.BaseChartLineBean;
 
 public class MyChartLineBean extends BaseChartLineBean {
 	private String des;

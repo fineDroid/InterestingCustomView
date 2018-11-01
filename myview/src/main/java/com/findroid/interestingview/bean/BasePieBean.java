@@ -1,4 +1,4 @@
-package com.zcjcumt.myview.bean;
+package com.findroid.interestingview.bean;
 
 public abstract class BasePieBean {
 	private float value;
