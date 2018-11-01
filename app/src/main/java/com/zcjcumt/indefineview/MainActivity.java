@@ -1,7 +1,9 @@
 package com.zcjcumt.indefineview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.findroid.interestingview.view.LineChartView;
 
@@ -44,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
 		LineChartView lineChartView = findViewById(R.id.myLineChart);
 		LineChartView.Builder builder = new LineChartView.Builder(lineChartView);
 		builder.setDatas(dataList).build();
+
+		findViewById(R.id.toFlowPage).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this, FlowActivity.class));
+			}
+		});
 	}
 
 }
