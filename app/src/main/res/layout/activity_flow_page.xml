@@ -3,24 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".FlowActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <com.findroid.interestingview.view.FlowLayout
-            android:id="@+id/myFlowLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#DCB5FF"
-            android:paddingBottom="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="20dp" />
-    </ScrollView>
-
+    <com.findroid.interestingview.view.FlowLayout
+        android:id="@+id/myFlowLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#DCB5FF" />
 
 </LinearLayout>

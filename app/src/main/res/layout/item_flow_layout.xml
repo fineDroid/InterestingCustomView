@@ -8,8 +8,6 @@
         android:id="@+id/item_flow_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
         android:background="@color/colorAccent"
         android:gravity="center"
         android:text="hello" />
