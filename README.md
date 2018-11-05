@@ -33,18 +33,19 @@ If you like them , star me just fine !
 
 LineChartView && PieView 
 
-![](https://github.com/fineDroid/MyImageResources/blob/master/device-2018-10-26-163105.png)
+<img src="https://github.com/fineDroid/MyImageResources/blob/master/device-2018-10-26-163105.png" width="300" hegiht="300" align=center />
 
+<img src="https://github.com/fineDroid/MyImageResources/blob/master/device-2018-10-26-163006.png" width="300" hegiht="300" align=center />
 
-![](https://github.com/fineDroid/MyImageResources/blob/master/device-2018-10-26-163006.png)
 
 
 FlowLayout
 
-![](https://github.com/fineDroid/MyImageResources/blob/master/device-2018-11-05-111929.png)
+<img src="https://github.com/fineDroid/MyImageResources/blob/master/device-2018-11-05-111929.png" width="300" hegiht="300" align=center />
+
+<img src="https://github.com/fineDroid/MyImageResources/blob/master/device-2018-11-05-111938.png" width="300" hegiht="300" align=center />
 
 
-![](https://github.com/fineDroid/MyImageResources/blob/master/device-2018-11-05-111938.png)
 
 
 
