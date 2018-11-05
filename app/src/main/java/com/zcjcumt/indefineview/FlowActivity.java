@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.findroid.interestingview.util.CustomUtil;
 import com.findroid.interestingview.view.FlowLayout;
 
+
+
 public class FlowActivity extends Activity {
 
 	@Override
@@ -48,13 +50,13 @@ public class FlowActivity extends Activity {
 		tv9.setText("hhhhhhhhdsfn\njkdshfjhhh\nhsajdjgdhjg");
 
 
-		ViewGroup.LayoutParams layoutParams1 = new ViewGroup.LayoutParams
+		ViewGroup.MarginLayoutParams layoutParams1 = new ViewGroup.MarginLayoutParams
 				(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-//		layoutParams1.leftMargin = CustomUtil.dip2px(this, 5);
-//		layoutParams1.rightMargin = CustomUtil.dip2px(this, 5);
-//		layoutParams1.topMargin = CustomUtil.dip2px(this, 5);
-//		layoutParams1.bottomMargin = CustomUtil.dip2px(this, 5);
+		layoutParams1.leftMargin = CustomUtil.dip2px(this, 5);
+		layoutParams1.rightMargin = CustomUtil.dip2px(this, 5);
+		layoutParams1.topMargin = CustomUtil.dip2px(this, 5);
+		layoutParams1.bottomMargin = CustomUtil.dip2px(this, 5);
 
 		flowLayout.addView(childView1, layoutParams1);
 		flowLayout.addView(childView2, layoutParams1);
