@@ -39,9 +39,9 @@ LineChartView && PieView
 ![](https://github.com/fineDroid/MyImageResources/blob/master/device-2018-10-26-163006.png)
 
 
+FlowLayout
 
 ![](https://github.com/fineDroid/MyImageResources/blob/master/device-2018-11-05-111929.png)
-
 
 
 ![](https://github.com/fineDroid/MyImageResources/blob/master/device-2018-11-05-111938.png)
