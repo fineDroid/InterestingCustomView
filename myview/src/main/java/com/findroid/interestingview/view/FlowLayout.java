@@ -42,16 +42,27 @@ public class FlowLayout extends ViewGroup {
 		measureChildren(widthMeasureSpec, heightMeasureSpec);
 		for (int i = 0; i < count; i++) {
 			View view = getChildAt(i);
+			int leftMargin = 0;
+			int rightMargin = 0;
+			int topMargin = 0;
+			int bottomMargin = 0;
+			LayoutParams mlp = view.getLayoutParams();
+			if (mlp instanceof MarginLayoutParams) {
+				leftMargin = ((MarginLayoutParams) mlp).leftMargin;
+				rightMargin = ((MarginLayoutParams) mlp).rightMargin;
+				topMargin = ((MarginLayoutParams) mlp).topMargin;
+				bottomMargin = ((MarginLayoutParams) mlp).bottomMargin;
+			}
 			if (view != null && view.getVisibility() != GONE) {
-				if (lineWidth + view.getMeasuredWidth() > extraWidth) {
+				if (lineWidth + view.getMeasuredWidth() + leftMargin + rightMargin > extraWidth) {
 					totalHeight += lineHeight;
-					lineWidth = view.getMeasuredWidth();
-					lineHeight = view.getMeasuredHeight();
+					lineWidth = view.getMeasuredWidth() + leftMargin + rightMargin;
+					lineHeight = view.getMeasuredHeight() + topMargin + bottomMargin;
 					maxWidth = widthSize;
 				} else {
-					lineWidth += view.getMeasuredWidth();
+					lineWidth += (view.getMeasuredWidth() + leftMargin + rightMargin);
 				}
-				lineHeight = Math.max(lineHeight, view.getMeasuredHeight());
+				lineHeight = Math.max(lineHeight, view.getMeasuredHeight() + topMargin + bottomMargin);
 			}
 		}
 		totalHeight += lineHeight;
@@ -83,32 +94,38 @@ public class FlowLayout extends ViewGroup {
 			int childWidth = childView.getMeasuredWidth();
 			int childHeight = childView.getMeasuredHeight();
 
-			MarginLayoutParams mlp = (MarginLayoutParams) childView.getLayoutParams();
+			LayoutParams mlp = childView.getLayoutParams();
+			int leftMargin = 0;
+			int rightMargin = 0;
+			int topMargin = 0;
+			int bottomMargin = 0;
 
-			if (childLeft + childWidth + mlp.leftMargin + mlp.rightMargin > flowWidth - parentPaddingLeft - parentPaddingRight) {
+			if (mlp instanceof MarginLayoutParams) {
+				leftMargin = ((MarginLayoutParams) mlp).leftMargin;
+				rightMargin = ((MarginLayoutParams) mlp).rightMargin;
+				topMargin = ((MarginLayoutParams) mlp).topMargin;
+				bottomMargin = ((MarginLayoutParams) mlp).bottomMargin;
+			}
+
+			if (childLeft + childWidth + leftMargin + rightMargin > flowWidth - parentPaddingLeft - parentPaddingRight) {
 				//+last view's margin
 				childTop += (maxHeight + lastTopMargin + lastBottomMargin);
-				maxHeight = 0;
+				maxHeight = childHeight;
 				childLeft = 0;
 			} else {
-				lastTopMargin = mlp.topMargin;
-				lastBottomMargin = mlp.bottomMargin;
+				lastTopMargin = topMargin;
+				lastBottomMargin = bottomMargin;
 				maxHeight = Math.max(maxHeight, childHeight);
 			}
 			//current view's margin
-			int left = childLeft + mlp.leftMargin + parentPaddingLeft;
-			int top = childTop + mlp.topMargin + parentPaddingTop;
+			int left = childLeft + leftMargin + parentPaddingLeft;
+			int top = childTop + topMargin + parentPaddingTop;
 			int right = left + childWidth;
 			int bottom = top + childHeight;
 
 			childView.layout(left, top, right, bottom);
 			//+last view's margin
-			childLeft += (mlp.leftMargin + childWidth + mlp.rightMargin);
+			childLeft += (leftMargin + childWidth + rightMargin);
 		}
-	}
-
-	@Override
-	protected LayoutParams generateLayoutParams(LayoutParams p) {
-		return new MarginLayoutParams(p);
 	}
 }

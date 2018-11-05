@@ -11,6 +11,6 @@
         android:id="@+id/myFlowLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#DCB5FF" />
+        android:background="#FF79BC" />
 
 </LinearLayout>

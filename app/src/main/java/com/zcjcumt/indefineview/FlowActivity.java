@@ -35,26 +35,26 @@ public class FlowActivity extends Activity {
 		TextView tv3 = (TextView) childView3.findViewById(R.id.item_flow_tv);
 		tv3.setText("ccccfsdfdsc\n sndjhfsdfsaj\n ddsfdsfds\ndfss\nddffsd\nfdgdfg");
 		TextView tv4 = (TextView) childView4.findViewById(R.id.item_flow_tv);
-		tv4.setText("jhsdfjhvsdfj");
+		tv4.setText("jhsdfjhvsdfj\njkhjh");
 		TextView tv5 = (TextView) childView5.findViewById(R.id.item_flow_tv);
 		tv5.setText("eeeeeeeeeee");
 		TextView tv6 = (TextView) childView6.findViewById(R.id.item_flow_tv);
 		tv6.setText("fff\nsajkdjk");
 		TextView tv7 = (TextView) childView7.findViewById(R.id.item_flow_tv);
-		tv7.setText("gg\ndsfhjkhshfj");
+		tv7.setText("gg\ndsfhjkhshfj\nbhgh");
 		TextView tv8 = (TextView) childView8.findViewById(R.id.item_flow_tv);
 		tv8.setText("hhhhhhhhhhh\nhsajdjgdhjg");
 		TextView tv9 = (TextView) childView9.findViewById(R.id.item_flow_tv);
 		tv9.setText("hhhhhhhhdsfn\njkdshfjhhh\nhsajdjgdhjg");
 
 
-		ViewGroup.MarginLayoutParams layoutParams1 = new ViewGroup.MarginLayoutParams
+		ViewGroup.LayoutParams layoutParams1 = new ViewGroup.LayoutParams
 				(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-		layoutParams1.leftMargin = CustomUtil.dip2px(this, 10);
-		layoutParams1.rightMargin = CustomUtil.dip2px(this, 10);
-		layoutParams1.topMargin = CustomUtil.dip2px(this, 10);
-		layoutParams1.bottomMargin = CustomUtil.dip2px(this, 10);
+//		layoutParams1.leftMargin = CustomUtil.dip2px(this, 5);
+//		layoutParams1.rightMargin = CustomUtil.dip2px(this, 5);
+//		layoutParams1.topMargin = CustomUtil.dip2px(this, 5);
+//		layoutParams1.bottomMargin = CustomUtil.dip2px(this, 5);
 
 		flowLayout.addView(childView1, layoutParams1);
 		flowLayout.addView(childView2, layoutParams1);
