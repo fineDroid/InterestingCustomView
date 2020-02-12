@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/toFlowPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="跳转到FlowPage"/>
-
-    <com.zcjcumt.indefineview.PieLayout
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center" />
-
-    <com.findroid.interestingview.view.LineChartView
-        android:id="@+id/myLineChart"
-        android:layout_width="300dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp" />
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
+        <Button
+            android:id="@+id/toFlowPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="跳转到FlowPage" />
 
-</LinearLayout>
+        <com.zcjcumt.indefineview.PieLayout
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center" />
+
+        <com.zcjcumt.indefineview.RingLayout
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center" />
+
+        <com.findroid.interestingview.view.LineChartView
+            android:id="@+id/myLineChart"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
